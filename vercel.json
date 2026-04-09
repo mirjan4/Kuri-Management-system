@@ -13,14 +13,17 @@
       }
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "chitfund/backend/server.js"
+      "src": "/api/(.*)",
+      "dest": "chitfund/backend/server.js"
     },
     {
-      "source": "/(.*)",
-      "destination": "chitfund/frontend/index.html"
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "chitfund/frontend/index.html"
     }
   ]
 }
