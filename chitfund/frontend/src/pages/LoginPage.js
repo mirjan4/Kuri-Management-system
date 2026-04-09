@@ -7,7 +7,7 @@ import { BanknotesIcon, EyeIcon, EyeSlashIcon, LockClosedIcon } from '@heroicons
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: 'admin@chitfund.com', password: 'admin123' });
+  const [form, setForm] = useState({ email: '[EMAIL_ADDRESS]', password: '[PASSWORD]' });
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
 
@@ -89,7 +89,7 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="label">Email Address</label>
-              <input type="email" className="input" placeholder="admin@chitfund.com"
+              <input type="email" className="input" placeholder="[EMAIL_ADDRESS]"
                 value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} required />
             </div>
             <div>
