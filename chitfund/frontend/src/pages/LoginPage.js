@@ -114,12 +114,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="card p-4 text-sm text-slate-500 dark:text-slate-400">
-            <p className="font-semibold text-slate-700 dark:text-slate-300 mb-1">Demo Credentials</p>
-            <p>Email: <span className="font-mono text-brand-600 dark:text-brand-400">admin@chitfund.com</span></p>
-            <p>Password: <span className="font-mono text-brand-600 dark:text-brand-400">admin123</span></p>
-          </div>
-
           <div className="text-center pt-4 border-t border-slate-100 dark:border-white/5">
             <p className="text-slate-500 text-sm">Are you a ChitFund member?</p>
             <Link to="/login/member" className="text-brand-600 font-bold text-sm hover:underline mt-1 block">Login here</Link>
