@@ -40,12 +40,12 @@ export default function LoginPage() {
             <div className="w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
               <BanknotesIcon className="w-6 h-6 text-white" />
             </div>
-            <span className="font-display font-bold text-2xl text-white">ChitFund Pro</span>
+            <span className="font-display font-bold text-2xl text-white">KuriApp</span>
           </div>
         </div>
         <div className="relative z-10 space-y-6">
           <h2 className="font-display text-4xl font-bold text-white leading-tight">
-            Manage your<br />chit funds<br />with ease
+            Manage your<br />Kuri<br />with ease
           </h2>
           <p className="text-brand-200 text-lg leading-relaxed">
             Track collections, manage members, conduct draws, and generate reports — all in one place.
@@ -64,7 +64,7 @@ export default function LoginPage() {
             ))}
           </div>
         </div>
-        <div className="relative z-10 text-brand-300 text-sm">© 2024 ChitFund Pro. All rights reserved.</div>
+        <div className="relative z-10 text-brand-300 text-sm">© {new Date().getFullYear()} KuriApp. All rights reserved.</div>
       </div>
 
       {/* Right panel */}
@@ -74,7 +74,7 @@ export default function LoginPage() {
             <div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center">
               <BanknotesIcon className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display font-bold text-xl text-slate-900 dark:text-white">ChitFund Pro</span>
+            <span className="font-display font-bold text-xl text-slate-900 dark:text-white">KuriApp</span>
           </div>
 
           <div>
@@ -115,7 +115,7 @@ export default function LoginPage() {
           </form>
 
           <div className="text-center pt-4 border-t border-slate-100 dark:border-white/5">
-            <p className="text-slate-500 text-sm">Are you a ChitFund member?</p>
+            <p className="text-slate-500 text-sm">Are you a KuriApp member?</p>
             <Link to="/login/member" className="text-brand-600 font-bold text-sm hover:underline mt-1 block">Login here</Link>
           </div>
         </div>
