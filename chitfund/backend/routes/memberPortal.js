@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { getMemberDashboard } = require('../controllers/memberPortalController');
-const { protect } = require('../middleware/auth');
+const { protect, memberOnly } = require('../middleware/auth');
 
-router.get('/dashboard', protect, getMemberDashboard);
+router.get('/dashboard', protect, memberOnly, getMemberDashboard);
 
 module.exports = router;

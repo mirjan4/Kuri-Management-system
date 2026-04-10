@@ -1,7 +1,22 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import api from '../utils/api';
 
 const AuthContext = createContext(null);
+
+// Checks if a JWT token is expired client-side (no network round-trip needed)
+const isTokenExpired = (token) => {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.exp * 1000 < Date.now();
+  } catch {
+    return true;
+  }
+};
+
+const clearSession = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
@@ -9,16 +24,37 @@ export const AuthProvider = ({ children }) => {
   });
   const [loading, setLoading] = useState(true);
 
+  const logout = useCallback(() => {
+    clearSession();
+    setUser(null);
+  }, []);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      api.get('/auth/me')
-        .then(res => setUser(res.data.user))
-        .catch(() => { localStorage.removeItem('token'); localStorage.removeItem('user'); setUser(null); })
-        .finally(() => setLoading(false));
-    } else {
+    if (!token) {
       setLoading(false);
+      return;
     }
+    // Fast client-side expiry check — avoids unnecessary API call
+    if (isTokenExpired(token)) {
+      clearSession();
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+    // Server-side token validation (catches revoked/deactivated accounts)
+    api.get('/auth/me')
+      .then(res => {
+        const serverUser = res.data.user;
+        serverUser.role = res.data.role || serverUser.role;
+        setUser(serverUser);
+        localStorage.setItem('user', JSON.stringify(serverUser));
+      })
+      .catch(() => {
+        clearSession();
+        setUser(null);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const login = async (email, password) => {
@@ -39,12 +75,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(user));
     setUser(user);
     return user;
-  };
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setUser(null);
   };
 
   return (
