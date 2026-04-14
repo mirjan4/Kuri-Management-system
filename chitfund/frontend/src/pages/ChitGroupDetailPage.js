@@ -146,7 +146,7 @@ export default function ChitGroupDetailPage() {
     msg += `📅 Month: *${cycles[selectedMonth - 1]?.label || `Cycle ${selectedMonth}`}*\n\n`;
 
     // We want to sort the list? Let's just print in order.
-    group.members?.forEach(gm => {
+    group.members?.forEach((gm, i) => {
       const isCurrentWinner = winners.find(w => w.monthIndex === selectedMonth && w.member?._id === gm.member._id);
       const isPreviousWinner = winners.find(w => w.monthIndex !== selectedMonth && w.member?._id === gm.member._id);
       const payment = payments.find(p => p.member?._id === gm.member._id);
@@ -156,10 +156,10 @@ export default function ChitGroupDetailPage() {
       if (isCurrentWinner) statusSuffix = '✅💙';  // This month's winner
       if (isPreviousWinner) statusSuffix = isPaid ? '✅💚' : '💚'; // Previous winner
 
-      msg += `${gm.member?.name} ${statusSuffix}\n`;
+      msg += `${i + 1}. ${gm.member?.name} ${statusSuffix}\n`;
     });
 
-    msg += `\nThank you`;
+    msg += `\n`;
     
     // Open in WhatsApp
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
