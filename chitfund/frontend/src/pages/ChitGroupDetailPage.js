@@ -147,12 +147,14 @@ export default function ChitGroupDetailPage() {
 
     // We want to sort the list? Let's just print in order.
     group.members?.forEach(gm => {
-      const isWinner = winners.find(w => w.monthIndex === selectedMonth && w.member?._id === gm.member._id);
+      const isCurrentWinner = winners.find(w => w.monthIndex === selectedMonth && w.member?._id === gm.member._id);
+      const isPreviousWinner = winners.find(w => w.monthIndex !== selectedMonth && w.member?._id === gm.member._id);
       const payment = payments.find(p => p.member?._id === gm.member._id);
       const isPaid = payment?.status === 'paid';
-      
-      let statusSuffix = isPaid ? '✅' : '❌'; // Unpaid is Cross
-      if (isWinner) statusSuffix = '🔥 (Winner)';
+
+      let statusSuffix = isPaid ? '✅' : '';       // Paid → ✅, Unpaid → (blank)
+      if (isCurrentWinner) statusSuffix = '✅💙';  // This month's winner
+      if (isPreviousWinner) statusSuffix = isPaid ? '✅💚' : '💚'; // Previous winner
 
       msg += `${gm.member?.name} ${statusSuffix}\n`;
     });
